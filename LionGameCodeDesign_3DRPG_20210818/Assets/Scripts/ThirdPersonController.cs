@@ -29,8 +29,29 @@ public class ThirdPersonController : MonoBehaviour
     // Range 範圍：可使用在數值類型資料上，例如：int, float
     [Header("移動速度"), Tooltip("用來調整角色移動速度"), Range(1, 500)]
     public float speed = 10.5f;
+    [Header("跳躍高度"), Range(0, 1000)]
+    public int jump = 100;
+    [Header("檢查地面資料")]
+    [Tooltip("用來檢查角色是否在地面上")]
+    public bool isGrounded;
+    public Vector3 v3CheckGroudOffset;
+    [Range(0, 3)]
+    public float checkGroundRadius = 0.2f;
+    [Header("音效檔案")]
+    public AudioClip soundJump;
+    public AudioClip soundGround;
+    [Header("動畫參數")]
+    public string animatorParWalk = "走路開關";
+    public string animatorParRun = "跑步開關";
+    public string animatorParHurt = "受傷觸發";
+    public string animatorParDead = "死亡開關";
+
+    private AudioSource aud;
+    private Rigidbody rig;
+    private Animator ani;
 
     #region Unity 資料類型
+    /** 練習 Unity 資料類型
     // 顏色 Color
     public Color color;
     public Color white = Color.white;                       // 內建顏色
@@ -61,6 +82,18 @@ public class ThirdPersonController : MonoBehaviour
     public Sprite sprite;       // 圖片 png, jpeg - 不支援 gif
     public Texture2D texture2D; // 2D 圖片 png, jpeg
     public Material material;   // 材質球
+    [Header("元件")]
+    // 元件 Component：屬性面板上可折疊的
+    public Transform tra;
+    public Animation aniOld;
+    public Animator aniNew;
+    public Light lig;             
+    public Camera cam;
+
+    // 綠色蚯蚓
+    // 1. 建議不要使用此名稱
+    // 2. 使用過時的 API
+    /**/
     #endregion
 
     #endregion
@@ -74,6 +107,6 @@ public class ThirdPersonController : MonoBehaviour
     #endregion
 
     #region 事件 Event
-
+    // 特定時間點會執行的方法，程式的入口 Start 等於 Console Main
     #endregion
 }
