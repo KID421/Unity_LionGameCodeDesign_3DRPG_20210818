@@ -258,6 +258,8 @@ public class ThirdPersonController : MonoBehaviour
     }
     #endregion
 
+    public GameObject playerObject;
+
     #region 事件 Event
     // 特定時間點會執行的方法，程式的入口 Start 等於 Console Main
     // 開始事件：遊戲開始時執行一次 - 處理初始化，取得資料等等
@@ -320,6 +322,17 @@ public class ThirdPersonController : MonoBehaviour
         print("HP：" + hp);
         */
         #endregion
+
+        // 要取得腳本的遊戲物件可以使用關鍵字 gameObject
+
+        // 取得元件的方式
+        // 1. 物件欄位名稱.取得元件(類型(元件類型)) 當作 元件類型;
+        aud = playerObject.GetComponent(typeof(AudioSource)) as AudioSource;
+        // 2. 此腳本遊戲物件.取得元件<泛型>();
+        rig = gameObject.GetComponent<Rigidbody>();
+        // 3. 取得元件<泛型>();
+        // 類別可以使用繼承類別(父類別)的成員，公開或保護 欄位、屬性與方法
+        ani = GetComponent<Animator>();
     }
 
     // 更新事件：一秒約執行 60 次，60 FPS - Frame Per Second
