@@ -131,11 +131,14 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
     /**/
-
+    /// <summary>
+    /// 跳躍按鍵
+    /// </summary>
     public KeyCode keyJump { get; }
     #endregion
 
-    #region 方法 Method
+    #region 練習方法 Method
+    /** 練習方法
     // 定義與實作較複雜程式的區塊，功能
     // 方法語法：修飾詞 傳回資料類型 方法名稱 (參數1, ...參數N) { 程式區塊 }
     // 常用傳回類型：無傳回 void - 此方法沒有傳回資料
@@ -154,11 +157,20 @@ public class ThirdPersonController : MonoBehaviour
         return 999;
     }
 
-    // 參數語法：資料類型 參數名稱
-    private void Skill(int damage)
+    // 參數語法：資料類型 參數名稱 指定 預設值
+    // 有預設值的參數可以不輸入引數，選填式參數
+    // ※ 選填式參數只能放在 () 右邊
+    private void Skill(int damage, string effect = "灰塵特效", string sound = "嘎嘎嘎")
     {
         print("參數版本 - 傷害值：" + damage);
-        print("參數版本 - 技能特效");
+        print("參數版本 - 技能特效：" + effect);
+        print("參數版本 - 音效：" + sound);
+    }
+
+    /* 錯誤：選填是參數沒有在 () 右邊
+    private void ErrorSkill(string effect = "灰塵特效", int damage)
+    {
+
     }
 
     // 對照組：不使用參數
@@ -180,6 +192,70 @@ public class ThirdPersonController : MonoBehaviour
         print("傷害值：" + 200);
         print("技能特效");
     }
+
+    // ※ 非必要但很重要
+    // BMI = 體重 / 身高 * 身高 (公尺)
+    /// <summary>
+    /// 計算 BMI 方法
+    /// </summary>
+    /// <param name="weight">體重，單位為公斤</param>
+    /// <param name="height">身高，單位為公尺</param>
+    /// <param name="name">名稱，測量者的名稱</param>
+    /// <returns>BMI 結果</returns>
+    private float BMI(float weight, float height, string name = "測試")
+    {
+        print(name + " 的 BMI");
+
+        return weight / (height * height);
+    }
+    */
+    #endregion
+
+    #region 方法 Method
+    // 摺疊 Ctrl + M O
+    // 展開 Ctrl + M L
+    /// <summary>
+    /// 移動
+    /// </summary>
+    /// <param name="speedMove">移動速度</param>
+    private void Move(float speedMove)
+    {
+
+    }
+
+    /// <summary>
+    /// 移動按鍵輸入
+    /// </summary>
+    /// <returns>移動按鍵值</returns>
+    private float MoveInput()
+    {
+        return 0;
+    }
+
+    /// <summary>
+    /// 檢查地板
+    /// </summary>
+    /// <returns>是否碰到地板</returns>
+    private bool CheckGround()
+    {
+        return false;
+    }
+
+    /// <summary>
+    /// 跳躍
+    /// </summary>
+    private void Jump()
+    {
+
+    }
+
+    /// <summary>
+    /// 更新動畫
+    /// </summary>
+    private void UpdateAnimation()
+    {
+
+    }
     #endregion
 
     #region 事件 Event
@@ -187,11 +263,31 @@ public class ThirdPersonController : MonoBehaviour
     // 開始事件：遊戲開始時執行一次 - 處理初始化，取得資料等等
     private void Start()
     {
+        #region 練習呼叫方法
+        /**
+        print(BMI(61, 1.68f, "KID"));
+        print(BMI(50, 1.5f));
+
         Skill100();
         Skill200();
         // 呼叫有參數方法時，必須輸入對應的引數
         Skill(300);
-        Skill(999);
+        Skill(999, "爆炸特效");
+        // 需求：傷害值 500，特效用預設值，音效換成 咻咻咻
+        // 有多個選填式參數時可使用指名參數語法：參數名稱: 值
+        Skill(500, sound: "咻咻咻");
+
+        // 呼叫自訂方法語法：方法名稱()；
+        Test();
+        Test();
+        // 呼叫有傳回值的方法
+        // 1. 區域變數指定傳回值 - 區域變數僅能在此結構 (大括號) 內存取
+        int j = ReturnJump();
+        print("跳躍值：" + j);
+        // 2. 將傳回方法當成值使用
+        print("跳躍值，當值使用：" + (ReturnJump() + 1));
+        */
+        #endregion
 
         #region 輸出方法
         /** 輸出 方法
@@ -224,16 +320,6 @@ public class ThirdPersonController : MonoBehaviour
         print("HP：" + hp);
         */
         #endregion
-
-        // 呼叫自訂方法語法：方法名稱()；
-        Test();
-        Test();
-        // 呼叫有傳回值的方法
-        // 1. 區域變數指定傳回值 - 區域變數僅能在此結構 (大括號) 內存取
-        int j = ReturnJump();
-        print("跳躍值：" + j);
-        // 2. 將傳回方法當成值使用
-        print("跳躍值，當值使用：" + (ReturnJump() + 1));
     }
 
     // 更新事件：一秒約執行 60 次，60 FPS - Frame Per Second
