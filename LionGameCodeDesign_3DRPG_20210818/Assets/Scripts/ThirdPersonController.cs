@@ -46,9 +46,11 @@ public class ThirdPersonController : MonoBehaviour
     public string animatorParHurt = "受傷觸發";
     public string animatorParDead = "死亡開關";
 
+
     private AudioSource aud;
     private Rigidbody rig;
     private Animator ani;
+    private ThirdPersonCamera cam;
 
     #region Unity 資料類型
     /** 練習 Unity 資料類型
@@ -220,16 +222,19 @@ public class ThirdPersonController : MonoBehaviour
     /// <param name="speedMove">移動速度</param>
     private void Move(float speedMove)
     {
-
+        rig.velocity =
+            (cam.posForward - transform.position) * MoveInput("Vertical") * speedMove +
+            transform.right * MoveInput("Horizontal") * speedMove +
+            transform.up * rig.velocity.y;
     }
 
     /// <summary>
     /// 移動按鍵輸入
     /// </summary>
     /// <returns>移動按鍵值</returns>
-    private float MoveInput()
+    private float MoveInput(string nameAxis)
     {
-        return 0;
+        return Input.GetAxis(nameAxis);
     }
 
     /// <summary>
@@ -259,6 +264,8 @@ public class ThirdPersonController : MonoBehaviour
     #endregion
 
     public GameObject playerObject;
+
+
 
     #region 事件 Event
     // 特定時間點會執行的方法，程式的入口 Start 等於 Console Main
@@ -333,13 +340,21 @@ public class ThirdPersonController : MonoBehaviour
         // 3. 取得元件<泛型>();
         // 類別可以使用繼承類別(父類別)的成員，公開或保護 欄位、屬性與方法
         ani = GetComponent<Animator>();
+
+        cam = FindObjectOfType<ThirdPersonCamera>();
     }
 
     // 更新事件：一秒約執行 60 次，60 FPS - Frame Per Second
     // 處理持續性運動，移動物件，監聽玩家輸入按鍵
     private void Update()
     {
+        Move(speed);
 
+        if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f)
+        {
+            Quaternion forward = Quaternion.LookRotation(cam.posForward - transform.position);
+            transform.rotation = Quaternion.Lerp(transform.rotation, forward, Time.deltaTime * 10);
+        }
     }
     #endregion
 }
