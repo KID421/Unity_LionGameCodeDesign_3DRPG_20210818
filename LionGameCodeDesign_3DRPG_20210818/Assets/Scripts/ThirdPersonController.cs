@@ -45,6 +45,8 @@ public class ThirdPersonController : MonoBehaviour
     public string animatorParRun = "跑步開關";
     public string animatorParHurt = "受傷觸發";
     public string animatorParDead = "死亡開關";
+    [Header("玩家遊戲物件")]
+    public GameObject playerObject;
 
     private AudioSource aud;
     private Rigidbody rig;
@@ -220,16 +222,24 @@ public class ThirdPersonController : MonoBehaviour
     /// <param name="speedMove">移動速度</param>
     private void Move(float speedMove)
     {
-
+        // 請取消 Animator 屬性 Apply Root Motion：勾選時使用動畫位移資訊
+        // 剛體.加速度 = 三維向量 - 加速度用來控制剛體三個軸向的運動速度
+        // 前方 * 輸入值 * 移動速度
+        // 使用前後左右軸向運動並且保持原本的地心引力
+        rig.velocity = 
+            Vector3.forward * MoveInput("Vertical") * speedMove +
+            Vector3.right * MoveInput("Horizontal") * speedMove +
+            Vector3.up * rig.velocity.y;
     }
 
     /// <summary>
     /// 移動按鍵輸入
     /// </summary>
+    /// <param name="axisName">要取得的軸向名稱</param>
     /// <returns>移動按鍵值</returns>
-    private float MoveInput()
+    private float MoveInput(string axisName)
     {
-        return 0;
+        return Input.GetAxis(axisName);
     }
 
     /// <summary>
@@ -257,8 +267,6 @@ public class ThirdPersonController : MonoBehaviour
 
     }
     #endregion
-
-    public GameObject playerObject;
 
     #region 事件 Event
     // 特定時間點會執行的方法，程式的入口 Start 等於 Console Main
@@ -340,6 +348,23 @@ public class ThirdPersonController : MonoBehaviour
     private void Update()
     {
 
+    }
+
+    // 固定更新事件：固定 0.02 秒執行一次 - 50 FPS
+    // 處理物理行為，例如：Rigidbody API
+    private void FixedUpdate()
+    {
+        Move(speed);
+    }
+
+    // 繪製圖示事件：
+    // 在 Unity Editor 內繪製圖示輔助開發，發布後會自動隱藏
+    private void OnDrawGizmos()
+    {
+        // 1. 指定顏色
+        // 2. 繪製圖形
+        Gizmos.color = new Color(1, 0, 0.2f, 0.3f);
+        Gizmos.DrawSphere(new Vector3(90, 2, 60), 1);
     }
     #endregion
 }
