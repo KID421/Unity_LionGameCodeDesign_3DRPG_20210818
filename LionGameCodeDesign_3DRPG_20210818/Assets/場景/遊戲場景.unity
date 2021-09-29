@@ -2383,7 +2383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.89360654
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2391,7 +2391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.4488511
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2403,7 +2403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 53.34
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2445,7 +2445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10.5
-  jump: 100
+  jump: 300
   isGrounded: 0
   v3CheckGroudOffset: {x: 0, y: 0, z: 0}
   checkGroundRadius: 0.1

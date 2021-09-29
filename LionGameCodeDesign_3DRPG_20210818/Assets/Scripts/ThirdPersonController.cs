@@ -138,7 +138,9 @@ public class ThirdPersonController : MonoBehaviour
     /// <summary>
     /// 跳躍按鍵
     /// </summary>
-    public KeyCode keyJump { get; }
+    // C# 7.0 存取子 可以使用 Lambda => 運算子
+    // 語法：get => { 程式區塊 } - 單行可省略大括號
+    private bool keyJump { get => Input.GetKeyDown(KeyCode.Space); }
     #endregion
 
     #region 練習方法 Method
@@ -269,7 +271,15 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        print("是否在地面上：" + CheckGround());
+        // print("是否在地面上：" + CheckGround());
+
+        // 並且 &&
+        // 如果 在地面上 並且 按下空白鍵 就 跳躍
+        if (CheckGround() && keyJump)
+        {
+            // 剛體.添加推力(此物件的上方 * 跳躍)
+            rig.AddForce(transform.up * jump);
+        }
     }
 
     /// <summary>
@@ -277,7 +287,24 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary>
     private void UpdateAnimation()
     {
+        // ※ 練習
+        // 預期成果：
+        // 按下前或後時 將布林值設為 true
+        // 沒有按時 將布林值設為 false
+        // Input
+        // if (選擇條件)
+        // !=、== 比較運算子 (選擇條件)
 
+        // 當玩家往前或後移動時 true
+        // 沒有按下前或後時 false
+        // 垂直值 不等於 0 就代表 true
+        // 垂直值 等於 0 就代表 false
+
+        // 沒有正確的程式，只有比較適合的程式
+
+        // 前後 不等於 0 或 左右 不等於 0 都是走路
+        // || 或者
+        ani.SetBool(animatorParWalk, MoveInput("Vertical") != 0 || MoveInput("Horizontal") != 0);
     }
     #endregion
 
@@ -360,8 +387,8 @@ public class ThirdPersonController : MonoBehaviour
     // 處理持續性運動，移動物件，監聽玩家輸入按鍵
     private void Update()
     {
-        CheckGround();
         Jump();
+        UpdateAnimation();
     }
 
     // 固定更新事件：固定 0.02 秒執行一次 - 50 FPS
