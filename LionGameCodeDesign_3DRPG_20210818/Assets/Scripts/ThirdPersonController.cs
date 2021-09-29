@@ -45,6 +45,8 @@ public class ThirdPersonController : MonoBehaviour
     public string animatorParRun = "跑步開關";
     public string animatorParHurt = "受傷觸發";
     public string animatorParDead = "死亡開關";
+    public string animatorParJump = "跳躍觸發";
+    public string animatorParIsGrounded = "是否在地板上";
     [Header("玩家遊戲物件")]
     public GameObject playerObject;
 
@@ -262,6 +264,8 @@ public class ThirdPersonController : MonoBehaviour
 
         //print("球體碰到的第一個物件：" + hits[0].name);
 
+        isGrounded = hits.Length > 0;
+
         // 傳回 碰撞陣列數量 > 0 - 只要碰到指定圖層物件就代表在地面上
         return hits.Length > 0;
     }
@@ -287,6 +291,7 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary>
     private void UpdateAnimation()
     {
+        /** 練習與走路動畫控制說明
         // ※ 練習
         // 預期成果：
         // 按下前或後時 將布林值設為 true
@@ -304,7 +309,13 @@ public class ThirdPersonController : MonoBehaviour
 
         // 前後 不等於 0 或 左右 不等於 0 都是走路
         // || 或者
+        */
         ani.SetBool(animatorParWalk, MoveInput("Vertical") != 0 || MoveInput("Horizontal") != 0);
+        // 設定是否在地板上 動畫參數
+        ani.SetBool(animatorParIsGrounded, isGrounded);
+        // 如果 按下 跳躍鍵 就 設定跳躍觸發參數
+        // 判斷式 只有一行敘述(只有一個分號) 可以省略 大括號
+        if (keyJump) ani.SetTrigger(animatorParJump);
     }
     #endregion
 
