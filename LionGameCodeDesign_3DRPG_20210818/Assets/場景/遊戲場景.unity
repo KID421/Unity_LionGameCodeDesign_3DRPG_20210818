@@ -2371,7 +2371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 89.77
+      value: 88.49
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2379,11 +2379,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 55.75624
+      value: 57.27
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.89360654
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2391,7 +2391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.4488511
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2403,7 +2403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 53.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2448,7 +2448,7 @@ MonoBehaviour:
   jump: 100
   isGrounded: 0
   v3CheckGroudOffset: {x: 0, y: 0, z: 0}
-  checkGroundRadius: 0.2
+  checkGroundRadius: 0.1
   soundJump: {fileID: 0}
   soundGround: {fileID: 0}
   animatorParWalk: "\u8D70\u8DEF\u958B\u95DC"
@@ -3026,7 +3026,7 @@ GameObject:
   - component: {fileID: 1822834831}
   - component: {fileID: 1822834830}
   - component: {fileID: 1822834829}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: "\u5730\u5F62"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
