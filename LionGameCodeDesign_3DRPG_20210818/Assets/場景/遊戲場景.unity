@@ -1126,8 +1126,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1499290870}
   speedTrack: 10
-  speedTurnHorizontal: 0
+  speedTurnHorizontal: 15
   speedTurnVertical: 10
+  limitAngleX: {x: -0.15, y: 0.2}
 --- !u!1001 &908126167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2563,6 +2564,7 @@ MonoBehaviour:
   animatorParJump: "\u8DF3\u8E8D\u89F8\u767C"
   animatorParIsGrounded: "\u662F\u5426\u5728\u5730\u677F\u4E0A"
   playerObject: {fileID: 1499290864}
+  speedLookAt: 10
 --- !u!54 &1499290866
 Rigidbody:
   m_ObjectHideFlags: 0

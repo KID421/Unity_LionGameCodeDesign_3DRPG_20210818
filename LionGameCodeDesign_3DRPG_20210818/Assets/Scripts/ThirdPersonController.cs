@@ -32,12 +32,16 @@ namespace KID
         public string animatorParIsGrounded = "是否在地板上";
         [Header("玩家遊戲物件")]
         public GameObject playerObject;
+        #endregion
 
         #region 欄位：私人
         private AudioSource aud;
         private Rigidbody rig;
         private Animator ani;
-        #endregion
+        /// <summary>
+        /// 攝影機類別
+        /// </summary>
+        private ThirdPersonCamera thirdPersonCamera;
         #endregion
 
         #region 屬性 Property
@@ -62,9 +66,11 @@ namespace KID
             // 剛體.加速度 = 三維向量 - 加速度用來控制剛體三個軸向的運動速度
             // 前方 * 輸入值 * 移動速度
             // 使用前後左右軸向運動並且保持原本的地心引力
+            // Vector3.forward 世界座標 的 前方 (全域)
+            // transform.forward 此物件 的 前方 (區域)
             rig.velocity =
-                Vector3.forward * MoveInput("Vertical") * speedMove +
-                Vector3.right * MoveInput("Horizontal") * speedMove +
+                transform.forward * MoveInput("Vertical") * speedMove +
+                transform.right * MoveInput("Horizontal") * speedMove +
                 Vector3.up * rig.velocity.y;
         }
 
@@ -133,6 +139,24 @@ namespace KID
             // 判斷式 只有一行敘述(只有一個分號) 可以省略 大括號
             if (keyJump) ani.SetTrigger(animatorParJump);
         }
+
+        [Header("面向速度"), Range(0, 50)]
+        public float speedLookAt = 2;
+
+        /// <summary>
+        /// 面向前方：面向攝影機前方位置
+        /// </summary>
+        private void LookAtForward()
+        {
+            // 垂直軸向 取絕對值 後 大於 0.1 就處理 面向
+            if (Mathf.Abs(MoveInput("Vertical")) > 0.1f)
+            {
+                // 取得前方角度 = 四元.面向角度(前方座標 - 本身座標)
+                Quaternion angle = Quaternion.LookRotation(thirdPersonCamera.posForward - transform.position);
+                // 此物件的角度 = 四元.插值
+                transform.rotation = Quaternion.Lerp(transform.rotation, angle, Time.deltaTime * speedLookAt);
+            }
+        }
         #endregion
 
         #region 事件 Event
@@ -148,12 +172,17 @@ namespace KID
             // 3. 取得元件<泛型>();
             // 類別可以使用繼承類別(父類別)的成員，公開或保護 欄位、屬性與方法
             ani = GetComponent<Animator>();
+
+            // 攝影機類別 = 透過類型尋找物件<泛型>();
+            // FindObjectOfType 不要放在 Update 內使用會造成大量效能負擔
+            thirdPersonCamera = FindObjectOfType<ThirdPersonCamera>();
         }
 
         private void Update()
         {
             Jump();
             UpdateAnimation();
+            LookAtForward();
         }
 
         private void FixedUpdate()
