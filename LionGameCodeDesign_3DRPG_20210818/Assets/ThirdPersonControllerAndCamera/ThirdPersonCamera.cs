@@ -20,7 +20,8 @@ namespace KID
         public float speedTurnVertical = 5;
         [Header("X 軸上下旋轉限制：最小與最大值")]
         public Vector2 limitAngleX = new Vector2(-0.2f, 0.2f);
-
+        [Header("攝影機在角色前方上下旋轉限制：最小與最大值")]
+        public Vector2 limitAngleFromTarget = new Vector2(-0.2f, 0);
         /// <summary>
         /// 攝影機前方座標
         /// </summary>
@@ -59,7 +60,7 @@ namespace KID
         private void Update()
         {
             TurnCamera();
-            LimitAngleX();
+            LimitAngleXAndZFromTarget();
             FreezeAngleZ();
         }
 
@@ -107,14 +108,15 @@ namespace KID
         }
 
         /// <summary>
-        /// 限制角度 X 軸
+        /// 限制角度 X 軸與在目標前方的 Z 軸
         /// </summary>
-        private void LimitAngleX()
+        private void LimitAngleXAndZFromTarget()
         {
-            print("攝影機的角度資訊：" + transform.rotation);
-            Quaternion angle = transform.rotation;                          // 取得四位元角度
-            angle.x = Mathf.Clamp(angle.x, limitAngleX.x, limitAngleX.y);   // 夾住角度 X 軸
-            transform.rotation = angle;                                     // 更新物件角度
+            // print("攝影機的角度資訊：" + transform.rotation);
+            Quaternion angle = transform.rotation;                                              // 取得四位元角度
+            angle.x = Mathf.Clamp(angle.x, limitAngleX.x, limitAngleX.y);                       // 夾住角度 X 軸
+            angle.z = Mathf.Clamp(angle.z, limitAngleFromTarget.x, limitAngleFromTarget.y);     // 夾住角度 Z 軸 - 攝影機在目標前方
+            transform.rotation = angle;                                                         // 更新物件角度
         }
 
         /// <summary>
