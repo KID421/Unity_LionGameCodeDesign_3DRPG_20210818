@@ -1125,7 +1125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1499290870}
-  speedTrack: 1.5
+  speedTrack: 10
+  speedTurnHorizontal: 0
+  speedTurnVertical: 10
 --- !u!1001 &908126167
 PrefabInstance:
   m_ObjectHideFlags: 0
