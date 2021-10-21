@@ -23,6 +23,9 @@ namespace KID.Dialogue
         private bool startDialogueKey { get => Input.GetKeyDown(KeyCode.E); }
         #endregion
 
+        [Header("對話系統")]
+        public DialogueSystem dialogueSystem;
+
         private void OnDrawGizmos()
         {
             Gizmos.color = new Color(0, 1, 0.2f, 0.3f);
@@ -33,6 +36,7 @@ namespace KID.Dialogue
         {
             goTip.SetActive(CheckPlayer());
             LookAtPlayer();
+            StartDialogue();
         }
 
         /// <summary>
@@ -58,6 +62,17 @@ namespace KID.Dialogue
             {
                 Quaternion angle = Quaternion.LookRotation(target.position - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, angle, Time.deltaTime * speedLookAt);
+            }
+        }
+
+        /// <summary>
+        /// 玩家進入範圍內 並且 按下指定按鍵 請對話系統執行 開始對話
+        /// </summary>
+        private void StartDialogue()
+        {
+            if (CheckPlayer() && startDialogueKey)
+            {
+                dialogueSystem.Dialogue(dataDialogue);
             }
         }
     }
