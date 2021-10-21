@@ -22,3 +22,4 @@ MonoBehaviour:
   - "\u5594\uFF01\u54C8\u5229\u6CE2\u7279\u4F60\u8655\u7406\u5B8C\u5566\uFF5E"
   - "\u611F\u8B1D\u4F60\uFF5E"
   countNeed: 10
+  stateNPCMission: 0

@@ -2894,6 +2894,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u54C8\u5229\u6CE2\u7279"
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: d0aa9529ba7e8c34db6d64679966f41d, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -3140,6 +3144,27 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1bb6e2b3ad66d664094ce58c0b0adb79, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 461413943bab6ef40aa2a33f18380180, type: 3}
+--- !u!1 &1510178447 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 461413943bab6ef40aa2a33f18380180, type: 3}
+  m_PrefabInstance: {fileID: 1510178446}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1510178448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510178447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7c91a1b9d91c94f9ac2fa9fcc44ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataDialogue: {fileID: 11400000, guid: 7df4afad261514f47a20034884c76209, type: 2}
+  checkPlayerRadius: 1.5
+  goTip: {fileID: 740424289}
+  speedLookAt: 5
 --- !u!1001 &1522129502
 PrefabInstance:
   m_ObjectHideFlags: 0
