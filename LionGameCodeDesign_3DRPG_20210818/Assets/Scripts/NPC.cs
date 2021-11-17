@@ -67,6 +67,7 @@ namespace KID.Dialogue
 
         /// <summary>
         /// 玩家進入範圍內 並且 按下指定按鍵 請對話系統執行 開始對話
+        /// 玩家退出範圍外 停止對話
         /// </summary>
         private void StartDialogue()
         {
@@ -74,6 +75,7 @@ namespace KID.Dialogue
             {
                 dialogueSystem.Dialogue(dataDialogue);
             }
+            else if (!CheckPlayer()) dialogueSystem.StopDialogue();
         }
     }
 }
