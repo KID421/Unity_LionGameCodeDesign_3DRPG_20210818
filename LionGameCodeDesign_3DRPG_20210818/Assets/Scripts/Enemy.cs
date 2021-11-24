@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using KID.Dialogue;
 
 namespace KID.Enemy
 {
@@ -31,6 +32,8 @@ namespace KID.Enemy
         public float timeAttack = 2.5f;
         [Header("攻擊延遲傳送傷害時間"), Range(0, 5)]
         public float delaySendDamage = 0.5f;
+        [Header("面向玩家速度"), Range(0, 50)]
+        public float speedLookAt = 10;
         #endregion
 
         #region 欄位：私人
@@ -68,6 +71,7 @@ namespace KID.Enemy
         private bool isTrack;
         private string parameterAttack = "攻擊觸發";
         private bool isAttack;
+        private bool targetIsDead;
         #endregion
 
         #region 繪製圖形
@@ -104,14 +108,26 @@ namespace KID.Enemy
         #endregion
 
         #region 事件
+        [Header("NPC 名稱")]
+        public string nameNPC = "NPC 小明";
+
+        private NPC npc;
+        private HurtSystem hurtSystem;
+
         private void Awake()
         {
             ani = GetComponent<Animator>();
             nma = GetComponent<NavMeshAgent>();
             nma.speed = speed;
+            hurtSystem = GetComponent<HurtSystem>();
 
             traPlayer = GameObject.Find(namePlayer).transform;
-            
+            npc = GameObject.Find(nameNPC).GetComponent<NPC>();
+
+            // 受傷系統 - 死亡事件觸發時 請 NPC 更新數量
+            // AddListener(方法) 添加監聽器(方法)
+            hurtSystem.onDead.AddListener(npc.UpdateMissionCount);
+
             nma.SetDestination(transform.position);             // 導覽器 一開始就先啟動
         }
 
@@ -262,8 +278,6 @@ namespace KID.Enemy
             StartCoroutine(DelaySendDamageToTarget());  // 啟動延遲傳送傷害給目標協程
         }
 
-        private bool targetIsDead;
-
         /// <summary>
         /// 延遲傳送傷害給目標
         /// </summary>
@@ -299,10 +313,6 @@ namespace KID.Enemy
             isWalk = false;
             nma.isStopped = false;
         }
-        #endregion
-
-        [Header("面向玩家速度"), Range(0, 50)]
-        public float speedLookAt = 10;
 
         /// <summary>
         /// 面向玩家
@@ -314,5 +324,6 @@ namespace KID.Enemy
             //ani.SetBool(parameterIdleWalk, transform.rotation != angle);
             ani.SetBool(parameterIdleWalk, Quaternion.Dot(transform.rotation, angle) < 0.9f);
         }
+        #endregion
     }
 }
