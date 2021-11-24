@@ -44,13 +44,19 @@ namespace KID
         /// </summary>
         /// <param name="damage">接收到的傷害</param>
         // 成員要被子類別複寫必須加上 virtual 虛擬
-        public virtual void Hurt(float damage)
+        public virtual bool Hurt(float damage)
         {
-            if (ani.GetBool(parameterDead)) return;     // 如果 死亡參數已經勾選 就跳出
+            if (ani.GetBool(parameterDead)) return true;     // 如果 死亡參數已經勾選 就跳出
+
             hp -= damage;
             ani.SetTrigger(parameterHurt);
             onHurt.Invoke();
-            if (hp <= 0) Dead();
+            if (hp <= 0)
+            {
+                Dead();
+                return true;
+            }
+            else return false;
         }
         #endregion
 

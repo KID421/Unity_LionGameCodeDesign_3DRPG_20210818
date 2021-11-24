@@ -155,7 +155,7 @@ namespace KID.Enemy
         /// </summary>
         private void Idle()
         {
-            if (playerInTrackRange) state = StateEnemy.Track;           // 如果 玩家進入 追蹤範圍 就切為追蹤狀態
+            if (!targetIsDead && playerInTrackRange) state = StateEnemy.Track;           // 如果 玩家進入 追蹤範圍 就切為追蹤狀態
 
             #region 進入條件
             if (isIdle) return;
@@ -187,7 +187,7 @@ namespace KID.Enemy
         private void Walk()
         {
             #region 持續執行區域
-            if (playerInTrackRange) state = StateEnemy.Track;           // 如果 玩家進入 追蹤範圍 就切為追蹤狀態
+            if (!targetIsDead && playerInTrackRange) state = StateEnemy.Track;           // 如果 玩家進入 追蹤範圍 就切為追蹤狀態
 
             nma.SetDestination(v3RandomWalkFinal);                                          // 代理器.設定目的地(座標)
             ani.SetBool(parameterIdleWalk, nma.remainingDistance > 0.05f);                   // 走路動畫 - 離目的地距離大於 0.1 時走路
@@ -262,6 +262,8 @@ namespace KID.Enemy
             StartCoroutine(DelaySendDamageToTarget());  // 啟動延遲傳送傷害給目標協程
         }
 
+        private bool targetIsDead;
+
         /// <summary>
         /// 延遲傳送傷害給目標
         /// </summary>
@@ -278,12 +280,24 @@ namespace KID.Enemy
                 v3AttackSize / 2, Quaternion.identity, 1 << 6);
 
             // 如果 碰撞物件數量大於 零，傳送攻擊力給碰撞物件的受傷系統
-            if (hits.Length > 0) hits[0].GetComponent<HurtSystem>().Hurt(attack);
+            if (hits.Length > 0) targetIsDead = hits[0].GetComponent<HurtSystem>().Hurt(attack);
+            if (targetIsDead) TargetDead();
 
             float waitToNextAttack = timeAttack - delaySendDamage;          // 計算剩餘冷卻時間
             yield return new WaitForSeconds(waitToNextAttack);              // 等待
 
             isAttack = false;                                               // 恢復 攻擊狀態
+        }
+
+        /// <summary>
+        /// 目標死亡
+        /// </summary>
+        private void TargetDead()
+        {
+            state = StateEnemy.Walk;
+            isIdle = false;
+            isWalk = false;
+            nma.isStopped = false;
         }
         #endregion
 
