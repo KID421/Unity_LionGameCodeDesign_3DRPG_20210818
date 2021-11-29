@@ -37,11 +37,25 @@ namespace KID.Dialogue
             Gizmos.DrawSphere(transform.position, checkPlayerRadius);
         }
 
+        private void Awake()
+        {
+            Initialize();
+        }
+
         private void Update()
         {
             goTip.SetActive(CheckPlayer());
             LookAtPlayer();
             StartDialogue();
+        }
+
+        /// <summary>
+        /// 初始設定
+        /// 狀態恢復為任務前
+        /// </summary>
+        private void Initialize()
+        {
+            dataDialogue.stateNPCMission = StateNPCMission.BeforeMission;
         }
 
         /// <summary>
@@ -73,12 +87,17 @@ namespace KID.Dialogue
         /// <summary>
         /// 玩家進入範圍內 並且 按下指定按鍵 請對話系統執行 開始對話
         /// 玩家退出範圍外 停止對話
+        /// 判斷狀態：任務前、任務中、任務後
         /// </summary>
         private void StartDialogue()
         {
             if (CheckPlayer() && startDialogueKey)
             {
                 dialogueSystem.Dialogue(dataDialogue);
+
+                // 判斷 如果 NPC 在任務前 就將 狀態改為任務中
+                if (dataDialogue.stateNPCMission == StateNPCMission.BeforeMission) 
+                    dataDialogue.stateNPCMission = StateNPCMission.Missionning;
             }
             else if (!CheckPlayer()) dialogueSystem.StopDialogue();
         }
@@ -92,7 +111,8 @@ namespace KID.Dialogue
             countCurrent++;
 
             // 目前數量 等於 需求數量 狀態 等於 完成任務
-            if (countCurrent == dataDialogue.countNeed) dataDialogue.stateNPCMission = StateNPCMission.AfterMission;
+            if (countCurrent == dataDialogue.countNeed) 
+                dataDialogue.stateNPCMission = StateNPCMission.AfterMission;
         }
     }
 }

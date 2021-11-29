@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 namespace KID
@@ -20,8 +21,13 @@ namespace KID
         [Header("攻擊區域尺寸與位移")]
         public Vector3 v3AttackOffset;
         public Vector3 v3AttackSize = Vector3.one;
-        [Header("攻擊動畫參數")]
+        [Header("攻擊與走路動畫參數")]
         public string parameterAttack = "攻擊圖層觸發";
+        public string parameterWalk = "走路開關";
+        [Header("攻擊事件")]
+        public UnityEvent onAttack;
+        [Header("攻擊圖層遮色片")]
+        public AvatarMask maskAttack;
         #endregion
 
         #region 欄位：私人
@@ -55,7 +61,7 @@ namespace KID
                 transform.up * v3AttackOffset.y +
                 transform.forward * v3AttackOffset.z,
                 transform.rotation, transform.localScale);
-            
+
             Gizmos.DrawCube(Vector3.zero, v3AttackSize);
         }
         #endregion
@@ -66,8 +72,20 @@ namespace KID
         /// </summary>
         private void Attack()
         {
+            #region 攻擊圖層遮色片處理
+            bool isWalk = ani.GetBool(parameterWalk);
+
+            // 左腳、右腳、左右腳 IK 與根部
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.LeftLeg, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.RightLeg, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.LeftFootIK, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.RightFootIK, !isWalk);
+            maskAttack.SetHumanoidBodyPartActive(AvatarMaskBodyPart.Root, !isWalk);
+            #endregion
+
             if (keyAttack && !isAttack)
             {
+                onAttack.Invoke();
                 isAttack = true;
                 ani.SetTrigger(parameterAttack);
                 StartCoroutine(DelayHit());
